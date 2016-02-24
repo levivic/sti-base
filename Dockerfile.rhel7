@@ -1,4 +1,5 @@
-FROM rhel7.2
+# use the rhel7 base image of yourslef
+FROM rhel7
 
 # This image is the base image for all OpenShift v3 language Docker images.
 # Location of the STI scripts inside the image
@@ -18,7 +19,7 @@ LABEL com.redhat.component="openshift-sti-base-docker" \
       name="openshift3/sti-base" \
       version="1.0" \
       release="1" \
-      architecture="x86_64"
+      architecture="s390x"
 
 # The $HOME is not set by default, but some applications needs this variable
 # TODO: There is a bug in rhel7.1 image where the PATH variable is not exported
@@ -34,6 +35,8 @@ COPY contrib/scl_enable /opt/app-root/etc/scl_enable
 ENV BASH_ENV=/opt/app-root/etc/scl_enable \
     ENV=/opt/app-root/etc/scl_enable \
     PROMPT_COMMAND=". /opt/app-root/etc/scl_enable"
+
+RUN yum install yum-utils -y
 
 # This is the list of basic dependencies that all language Docker image can
 # consume.
